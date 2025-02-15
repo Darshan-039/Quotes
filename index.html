@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- <div id="quotes"></div>
+    <div id="author"></div>
+    <button id="newQ">new Quotes</button>
+    <button id="tweetMe">tweetMe</button> -->
+
+    <div class="container">
+        <div class="inner" data-aos="zoom-in">
+            <div class="box">
+                <p class="number">
+                    <img src="logo.jpg" alt="TweetMe" title="TweetMe" id="tweetMe">
+                </p>
+                <div class="text">
+                    <i class="start-quotes fas fa-quote-left"></i>
+                    <p id="quotes" class="quote"></p>
+                    <p id="author" class="author"></p>
+                </div>
+                <label class="button">
+                    <p id="newQ">new Quotes</p>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        let realData = "";
+        const quotes = document.getElementById("quotes");
+        const author = document.getElementById("author");
+        const newQ = document.getElementById("newQ");
+        const tweetMe = document.getElementById("tweetMe");
+
+
+        const tweetNow = () => {
+            let tweetpost = `https://twitter.com/intent/tweet?text=${realData.text}`;
+            window.open(tweetpost);
+        }
+
+        const getquotes = async () => {
+            const api = "https://go-quote.azurewebsites.net/";
+            try {
+                let data = await fetch(api);
+                realData = await data.json();
+                quotes.innerText = `${realData.text}`;
+                author.innerText = `${realData.author}`;
+            } catch (error) { }
+        }
+
+
+        tweetMe.addEventListener("click", tweetNow);
+        newQ.addEventListener("click", getquotes);
+        getquotes();
+
+
+    </script>
+</body>
+
+</html>
